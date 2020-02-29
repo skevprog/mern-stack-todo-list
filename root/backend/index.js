@@ -13,6 +13,8 @@ const todos = require('./routes');
 
 const app = express();
 
+app.use(express.json());
+
 app.use('/api/v1/todos', todos);
 
 const PORT = process.env.PORT || 5000;

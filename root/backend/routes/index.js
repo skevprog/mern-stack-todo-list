@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { getTodos, addTodo, deleteTodo } = require('../controllers/todos');
+const { getTodos, addTodo, deleteTodo, deleteTodos } = require('../controllers/todos');
 
 router
   .route('/')
   .get(getTodos)
-  .post(addTodo);
+  .post(addTodo)
+  .delete(deleteTodos);
 
 router
   .route('/:id')
