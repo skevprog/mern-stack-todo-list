@@ -1,10 +1,13 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
+const connectDB = require('./config/db')
 
 dotenv.config({
   path: './config/config.env',
 });
+
+connectDB();
 
 const todos = require('./routes');
 
