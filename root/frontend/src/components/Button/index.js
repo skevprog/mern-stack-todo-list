@@ -1,21 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 export default class index extends Component {
-
   render() {
-    const { 
+    const {
       text,
       onClick,
-      type 
+      type,
     } = this.props;
     return (
-      <button 
-        onClick={onClick} 
+      <button
+        onClick={onClick}
         {...this.props}
         type={type}
       >
         {text}
       </button>
-    )
+    );
   }
 }
