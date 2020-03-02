@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import Button from './components/Button';
+import { Button } from './components';
+import { API_URL } from './utilities';
 import Todos from './containers/Todos';
 
 class App extends Component {
@@ -18,7 +19,7 @@ class App extends Component {
   }
 
   getTodos = () => {
-    fetch('/api/v1/todos')
+    fetch(API_URL)
       .then(res => res.json())
       .then((data) => {
         this.setState({ todos: data.data });
@@ -35,8 +36,8 @@ class App extends Component {
     e.preventDefault();
     const { todo, todos } = this.state;
     const data = { description: todo };
-    fetch('/api/v1/todos', {
-      method: 'POST', // or 'PUT'
+    fetch(API_URL, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -54,7 +55,7 @@ class App extends Component {
 
   handleOnDelete = (id) => {
     const { todos } = this.state;
-    fetch(`/api/v1/todos/${id}`, { method: 'DELETE' })
+    fetch(`${API_URL}/${id}`, { method: 'DELETE' })
       .then(res => res.json())
       .then(() => this.setState({
         // eslint-disable-next-line no-underscore-dangle
@@ -67,11 +68,11 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Todos App</h1>
+          <h1>To-do List</h1>
         </header>
         <form
           onSubmit={this.handleOnSubmit}
-          className="row flex-center"
+          className="row flex-center margin-bottom-large"
         >
           <input
             type="text"
@@ -79,12 +80,13 @@ class App extends Component {
             onChange={this.handleOnChange}
             value={todo}
             placeholder="Write a task"
+            className="col-6 lg-2"
           />
           <Button
             type="submit"
             text="Add"
             disabled={!todo}
-            className="margin-left-small"
+            className="margin-left-small col-2 lg-1"
           />
         </form>
         <div className="todos-container child-borders">

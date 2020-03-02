@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import Todo from '../../components/Todo';
+import { Todo } from '../../components';
 
 export default class Todos extends Component {
   renderTodos = () => {
@@ -7,7 +7,12 @@ export default class Todos extends Component {
     return todos.map((todo) => {
       const { description, _id } = todo;
       return (
-        <Todo key={_id} description={description} onDelete={() => onDelete(_id)} />);
+        <Todo
+          key={_id}
+          description={description}
+          onDelete={() => onDelete(_id)}
+        />
+      );
     });
   }
 

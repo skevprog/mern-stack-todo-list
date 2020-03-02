@@ -12,7 +12,7 @@ const connectDB = async () => {
   } catch(err) {
     console.error(`Something went wrong ${err.message}`);
     // exit application
-    process.exit(1);
+    process.exit(1); 
   }
 }
 
