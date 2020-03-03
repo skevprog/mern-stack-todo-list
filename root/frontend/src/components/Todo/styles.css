@@ -1,0 +1,4 @@
+.delete {
+  transition: .8s ease;
+  transform: scale(0);
+}

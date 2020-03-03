@@ -3,14 +3,16 @@ import { Todo } from '../../components';
 
 export default class Todos extends Component {
   renderTodos = () => {
-    const { todos, onDelete } = this.props;
+    const { todos, onDelete, animation } = this.props;
     return todos.map((todo) => {
       const { description, _id } = todo;
       return (
         <Todo
           key={_id}
+          uniqueKey={_id}
           description={description}
           onDelete={() => onDelete(_id)}
+          animation={animation}
         />
       );
     });

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import { Button } from './components';
-import { API_URL } from './utilities';
+import { createTodo, deleteTodo, getTodos } from './utilities';
 import Todos from './containers/Todos';
 
 class App extends Component {
@@ -15,15 +15,15 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getTodos();
+    this.setTodos();
   }
 
-  getTodos = () => {
-    fetch(API_URL)
-      .then(res => res.json())
+  setTodos = () => {
+    getTodos()
       .then((data) => {
         this.setState({ todos: data.data });
-      });
+      })
+      .catch(err => console.error('ERRORR!', err.message))
   }
 
   handleOnChange = (e) => {
@@ -36,31 +36,24 @@ class App extends Component {
     e.preventDefault();
     const { todo, todos } = this.state;
     const data = { description: todo };
-    fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then(resp => resp.json())
-      .then((respJest) => {
+    createTodo(data)
+      .then(data => {
         this.setState({
           todo: '',
-          todos: [...todos, respJest.data],
-        });
+          todos: [...todos, data.data],
+        })
       })
-      .catch(err => console.error('Something went wrong!', err.message));
+      .catch(err => console.error('ERRORR!', err.message))
   }
 
   handleOnDelete = (id) => {
     const { todos } = this.state;
-    fetch(`${API_URL}/${id}`, { method: 'DELETE' })
-      .then(res => res.json())
+    deleteTodo(id)
       .then(() => this.setState({
         // eslint-disable-next-line no-underscore-dangle
         todos: [...todos.filter(el => el._id !== id)],
-      }));
+      }))
+      .catch(err => console.error(err.message))
   }
 
   render() {
@@ -89,9 +82,9 @@ class App extends Component {
             className="margin-left-small col-2 lg-1"
           />
         </form>
-        <div className="todos-container child-borders">
-          <Todos todos={todos} onDelete={this.handleOnDelete} />
-        </div>
+        {todos.length ? (<div className="todos-container child-borders">
+          <Todos todos={todos} onDelete={this.handleOnDelete} animation={this.state.animation} />
+        </div>) : null}
       </div>
     );
   }
