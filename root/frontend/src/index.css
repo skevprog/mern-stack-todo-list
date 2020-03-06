@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+
+html {    
+    background: url('https://www.getpapercss.com/img/geometry2.png') fixed;     
+}

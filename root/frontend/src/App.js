@@ -23,7 +23,7 @@ class App extends Component {
       .then((data) => {
         this.setState({ todos: data.data });
       })
-      .catch(err => console.error('ERRORR!', err.message))
+      .catch(err => console.error('Something went wrong =>', err.message))
   }
 
   handleOnChange = (e) => {
@@ -43,7 +43,7 @@ class App extends Component {
           todos: [...todos, data.data],
         })
       })
-      .catch(err => console.error('ERRORR!', err.message))
+      .catch(err => console.error('Something went wrong =>', err.message))
   }
 
   handleOnDelete = (id) => {
@@ -53,7 +53,7 @@ class App extends Component {
         // eslint-disable-next-line no-underscore-dangle
         todos: [...todos.filter(el => el._id !== id)],
       }))
-      .catch(err => console.error(err.message))
+      .catch(err => console.error('Something went wrong =>', err.message))
   }
 
   render() {
@@ -73,13 +73,13 @@ class App extends Component {
             onChange={this.handleOnChange}
             value={todo}
             placeholder="Write a task"
-            className="col-6 lg-2"
+            className="col-6 md-4"
           />
           <Button
             type="submit"
             text="Add"
             disabled={!todo}
-            className="margin-left-small col-2 lg-1"
+            className="margin-left-small col-2 md-1"
           />
         </form>
         {todos.length ? (<div className="todos-container child-borders">

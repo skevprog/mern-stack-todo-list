@@ -32,7 +32,7 @@ export default class Todo extends Component {
       description,
     } = this.props;
     return (
-      <div className={`row col-9 md-4 border-dashed padding-small flex-edges margin-bottom-small ${animate ? 'delete' : ''}`}>
+      <div className={`row col-7 md-4 border-dashed padding-small flex-edges margin-bottom-small ${animate ? 'delete' : ''}`}>
         <span className="col-8 col padding-small">
           {description}
         </span>
