@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './styles.css';
 
-export default class index extends Component {
-  render() {
-    const {
-      text,
-      onClick,
-      type,
-    } = this.props;
-    return (
-      <button
-        onClick={onClick}
-        {...this.props}
-        type={type}
-      >
-        {text}
-      </button>
-    );
-  }
+function Button(props) {
+  const {
+    text,
+    onClick,
+    type,
+  } = props;
+  return (
+    <button
+      onClick={onClick}
+      type={type}
+      {...props}
+    >
+      {text}
+    </button>
+  );
 }
+
+export default Button;
