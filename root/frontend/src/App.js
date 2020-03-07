@@ -11,6 +11,8 @@ class App extends Component {
     this.state = {
       todo: '',
       todos: [],
+      errorMessage: '',
+      status: false,
     };
   }
 
@@ -23,7 +25,11 @@ class App extends Component {
       .then((data) => {
         this.setState({ todos: data.data });
       })
-      .catch(err => console.error('Something went wrong =>', err.message))
+      .catch(err => {
+        this.setState({
+          errorMessage: err.message
+        })
+      });
   }
 
   handleOnChange = (e) => {
@@ -43,21 +49,34 @@ class App extends Component {
           todos: [...todos, data.data],
         })
       })
-      .catch(err => console.error('Something went wrong =>', err.message))
+      .catch(err => {
+        this.setState({
+          errorMessage: err.message
+        })
+      });
   }
 
   handleOnDelete = (id) => {
     const { todos } = this.state;
     deleteTodo(id)
-      .then(() => this.setState({
-        // eslint-disable-next-line no-underscore-dangle
-        todos: [...todos.filter(el => el._id !== id)],
-      }))
-      .catch(err => console.error('Something went wrong =>', err.message))
+      .then((data) => {
+        if (data.success) {
+          this.setState({
+            // eslint-disable-next-line no-underscore-dangle
+            todos: [...todos.filter(el => el._id !== id)],
+            status: data.success,
+          })
+        }
+      })
+      .catch(err => {
+        this.setState({
+          errorMessage: err.message
+        })
+      });
   }
 
   render() {
-    const { todo, todos } = this.state;
+    const { todo, todos, errorMessage } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -83,8 +102,9 @@ class App extends Component {
           />
         </form>
         {todos.length ? (<div className="todos-container child-borders">
-          <Todos todos={todos} onDelete={this.handleOnDelete} animation={this.state.animation} />
+          <Todos todos={todos} status={this.state.status} onDelete={this.handleOnDelete} />
         </div>) : null}
+        {errorMessage && <h3 className="error-message"></h3>}
       </div>
     );
   }

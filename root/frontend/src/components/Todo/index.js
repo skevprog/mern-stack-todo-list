@@ -20,10 +20,13 @@ export default class Todo extends Component {
   }
 
   handleAnimation = () => {
-    const { onDelete, uniqueKey } = this.props;
-    this.setState({
-      animate: true,
-    }, () => onDelete(uniqueKey));
+    const { onDelete, uniqueKey, status } = this.props;
+    onDelete(uniqueKey);
+    if (status) {
+      this.setState({
+        animate: true,
+      });
+    }
   }
 
   render() {

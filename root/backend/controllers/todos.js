@@ -30,7 +30,7 @@ exports.addTodo = async (req, res, next) => {
     return res.status(201).json({
       success: true,
       data: todo,
-    })
+    });
   } catch (err) {
     if (err.name === 'ValidationError') {
       const messages = Object.values(err.errors).map(err => err.message);
@@ -38,17 +38,16 @@ exports.addTodo = async (req, res, next) => {
         success: false,
         error: messages,
       });
-    } else {
-      return res.status(500).json({
-        success: false,
-        error: 'Server Error',
-      });
     }
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error',
+    });
   }
 };
 
 // @desc Delete Todo
-// @route DELETE /api/v1/todos
+// @route DELETE /api/v1/todos/:id
 // @access Public
 exports.deleteTodo = async (req, res, next) => {
   try {
@@ -57,26 +56,36 @@ exports.deleteTodo = async (req, res, next) => {
     if (!todo) {
       return res.status(404).json({
         success: false,
-        error: 'Not Todo Found',
+        error: 'Not To-do Found',
       });
     }
-
     await todo.remove();
+
     return res.status(200).json({
       success: true,
       message: 'Todo removed',
     });
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: 'Server error',
     });
   }
 };
 
-exports.deleteTodos = async(req, res, next) => {
+// @desc Delete Todos
+// @route DELETE /api/v1/todos
+// @access Public
+exports.deleteTodos = async (req, res, next) => {
   try {
-    const todo = await Todo.remove({});
+    const todos = await Todo.find();
+    if (!todos.length) {
+      return res.status(404).json({
+        success: false,
+        message: 'Not todos to remove',
+      });
+    }
+    await todos.remove({});
     return res.status(200).json({
       success: true,
       message: 'Todos removed',
@@ -87,4 +96,4 @@ exports.deleteTodos = async(req, res, next) => {
       error: 'Server error',
     });
   }
-}
+};
