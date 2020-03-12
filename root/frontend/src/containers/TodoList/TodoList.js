@@ -1,14 +1,17 @@
 import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { Button, Todo } from '../../components';
-import { getTodos, createTodo, deleteTodo } from '../../redux/actions/todoActions';
+import {
+  getTodos,
+  createTodo,
+  deleteTodo
+} from '../../redux/actions/todoActions';
 
 class TodoList extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      description: '',
+      description: ''
     };
   }
 
@@ -16,41 +19,36 @@ class TodoList extends Component {
     this.props.getTodos();
   }
 
-  handleOnChange = (e) => {
+  handleOnChange = e => {
     this.setState({
-      description: e.target.value,
+      description: e.target.value
     });
   };
 
-  handleOnSubmit = (e) => {
+  handleOnSubmit = e => {
     e.preventDefault();
     const { description } = this.state;
-      this.props.createTodo({ description });
-  }
+    this.props.createTodo({ description });
+  };
 
-  handleOnDelete = (id) => {
+  handleOnDelete = id => {
     this.props.deleteTodo(id);
-  }
+  };
 
   renderTodos = () => {
     const { todos } = this.props.all;
-    return todos.map(({ _id, description }) =>
-      (
-        <Todo
-          key={_id}
-          uniqueKey={_id}
-          description={description}
-          onDelete={() => this.handleOnDelete(_id)}
-        />
-      )
-    );
-  }
+    return todos.map(({ _id, description }) => (
+      <Todo
+        key={_id}
+        uniqueKey={_id}
+        description={description}
+        onDelete={() => this.handleOnDelete(_id)}
+      />
+    ));
+  };
 
   render() {
-    const {
-      description,
-    } = this.state;
-    console.log(this.props.all)
+    const { description } = this.state;
     return (
       <Fragment>
         <form
@@ -76,12 +74,14 @@ class TodoList extends Component {
           {this.renderTodos()}
         </div>
       </Fragment>
-    )
+    );
   }
 }
 
 const mapStateToProps = state => ({
-  all: state.todo,
-})
+  all: state.todo
+});
 
-export default connect(mapStateToProps, { getTodos, createTodo, deleteTodo })(TodoList);
+export default connect(mapStateToProps, { getTodos, createTodo, deleteTodo })(
+  TodoList
+);

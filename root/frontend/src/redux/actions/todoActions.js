@@ -5,7 +5,6 @@ import axios from 'axios';
 
 export const getTodos = () => dispatch => {
   axios.get(API_URL).then(res => {
-    console.log(res)
     dispatch({
       type: GET_TODOS,
       payload: res.data.data

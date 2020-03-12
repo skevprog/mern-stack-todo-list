@@ -21,7 +21,7 @@ export default class Todo extends Component {
 
   handleAnimation = () => {
     const { onDelete, uniqueKey } = this.props;
-    onDelete(uniqueKey);
+    onDelete(uniqueKey);;;;
     this.setState({
       animate: true,
     });
