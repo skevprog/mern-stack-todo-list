@@ -28,7 +28,12 @@ class TodoList extends Component {
   handleOnSubmit = e => {
     e.preventDefault();
     const { description } = this.state;
-    this.props.createTodo({ description });
+    this.setState(
+      {
+        description: ''
+      },
+      () => this.props.createTodo({ description })
+    );
   };
 
   handleOnDelete = id => {
@@ -49,6 +54,7 @@ class TodoList extends Component {
 
   render() {
     const { description } = this.state;
+    const { errorMessage } = this.props;
     return (
       <Fragment>
         <form
@@ -72,6 +78,7 @@ class TodoList extends Component {
         </form>
         <div className="todos-container child-borders">
           {this.renderTodos()}
+          {errorMessage && <h4>{errorMessage}</h4>}
         </div>
       </Fragment>
     );
@@ -79,7 +86,8 @@ class TodoList extends Component {
 }
 
 const mapStateToProps = state => ({
-  all: state.todo
+  all: state.todo,
+  errorMessage: state.todo.error
 });
 
 export default connect(mapStateToProps, { getTodos, createTodo, deleteTodo })(

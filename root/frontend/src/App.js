@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Provider } from 'react-redux';
 import store from './redux/store';
+import { Provider } from 'react-redux';
+import { Header } from './components';
 import TodoList from './containers/TodoList/TodoList';
 
 class App extends Component {
@@ -10,9 +11,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div className="App">
-          <header className="App-header">
-            <h1>To-do List</h1>
-          </header>
+          <Header title="To-do List" />
           <TodoList />
         </div>
       </Provider>
