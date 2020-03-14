@@ -1,17 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Button, Todo } from '../../components';
+import { Todo, TodoForm, Spinner } from '../../components';
 import {
   getTodos,
   createTodo,
-  deleteTodo
+  deleteTodo,
 } from '../../redux/actions/todoActions';
 
 class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      description: ''
+      description: '',
     };
   }
 
@@ -19,24 +19,24 @@ class TodoList extends Component {
     this.props.getTodos();
   }
 
-  handleOnChange = e => {
+  handleOnChange = (e) => {
     this.setState({
-      description: e.target.value
+      description: e.target.value,
     });
   };
 
-  handleOnSubmit = e => {
+  handleOnSubmit = (e) => {
     e.preventDefault();
     const { description } = this.state;
     this.setState(
       {
-        description: ''
+        description: '',
       },
-      () => this.props.createTodo({ description })
+      () => this.props.createTodo({ description }),
     );
   };
 
-  handleOnDelete = id => {
+  handleOnDelete = (id) => {
     this.props.deleteTodo(id);
   };
 
@@ -54,32 +54,22 @@ class TodoList extends Component {
 
   render() {
     const { description } = this.state;
-    const { errorMessage } = this.props;
+    const { errorMessage, loading } = this.props;
     return (
       <Fragment>
-        <form
+        <TodoForm
+          onChange={this.handleOnChange}
           onSubmit={this.handleOnSubmit}
-          className="row flex-center margin-bottom-large"
-        >
-          <input
-            type="text"
-            name="description"
-            onChange={this.handleOnChange}
-            value={description}
-            placeholder="Write a task"
-            className="col-6 md-4"
-          />
-          <Button
-            type="submit"
-            text="Add"
-            disabled={!description}
-            className="margin-left-small col-2 md-1"
-          />
-        </form>
-        <div className="todos-container child-borders">
+          inputValue={description}
+          inputPlaceholder="Write a task"
+        />
+       {loading ? 
+       (<Spinner />) 
+        :
+        (<div className="todos-container child-borders">
           {this.renderTodos()}
-          {errorMessage && <h4>{errorMessage}</h4>}
-        </div>
+        </div>)}
+        {errorMessage && <h4>{errorMessage}</h4>}
       </Fragment>
     );
   }
@@ -87,9 +77,10 @@ class TodoList extends Component {
 
 const mapStateToProps = state => ({
   all: state.todo,
-  errorMessage: state.todo.error
+  errorMessage: state.todo.error,
+  loading: state.todo.loading,
 });
 
 export default connect(mapStateToProps, { getTodos, createTodo, deleteTodo })(
-  TodoList
+  TodoList,
 );

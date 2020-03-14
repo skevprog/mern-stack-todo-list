@@ -1,0 +1,23 @@
+.loader {
+    border: .6rem solid #3498db;
+    border-top: .6rem solid #f3f3f3; 
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @media only screen and (min-width: 520px) {
+    .loader {
+      width: 6rem;
+      height: 6rem;
+      border: .8rem solid #3498db;;
+      border-top: .8rem solid #f3f3f3; 
+    }
+  }
+  

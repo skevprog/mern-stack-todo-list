@@ -3,7 +3,6 @@ import './styles.css';
 import Button from '../Button';
 
 export default class Todo extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -21,22 +20,22 @@ export default class Todo extends Component {
 
   handleAnimation = () => {
     const { onDelete, uniqueKey } = this.props;
-    onDelete(uniqueKey);;;;
+    onDelete(uniqueKey);
     this.setState({
       animate: true,
     });
-  }
+  };
 
   render() {
     const { animate } = this.state;
-    const {
-      description,
-    } = this.props;
+    const { description } = this.props;
     return (
-      <div className={`row col-7 md-4 border-dashed padding-small flex-edges margin-bottom-small ${animate ? 'delete' : ''}`}>
-        <span className="col-8 col padding-small">
-          {description}
-        </span>
+      <div
+        className={`row col-7 md-4 border-dashed padding-small flex-edges margin-bottom-small ${
+          animate ? 'delete' : ''
+        }`}
+      >
+        <span className="col-8 col padding-small">{description}</span>
         <Button
           type="button"
           text="X"

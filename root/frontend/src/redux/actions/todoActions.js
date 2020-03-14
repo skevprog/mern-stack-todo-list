@@ -1,54 +1,59 @@
-import { GET_TODOS, ADD_TODO, DELETE_TODO, ERROR } from '../actions/types';
-import { API_URL } from '../../utilities';
 import axios from 'axios';
+import { GET_TODOS, ADD_TODO, DELETE_TODO, ERROR, LOADING } from '../actions/types';
+import { API_URL } from '../../utilities';
 
-export const getTodos = () => dispatch => {
+export const setLoader = () => ({
+  type: LOADING,
+});
+
+export const getTodos = () => (dispatch) => {
+  dispatch(setLoader());
   axios
     .get(API_URL)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: GET_TODOS,
-        payload: res.data.data
+        payload: res.data.data,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({
         type: ERROR,
-        payload: err.message
+        payload: err.message,
       });
     });
 };
 
-export const createTodo = todo => dispatch => {
+export const createTodo = todo => (dispatch) => {
   axios
     .post(API_URL, todo)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: ADD_TODO,
-        payload: res.data.data
+        payload: res.data.data,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({
         type: ERROR,
-        payload: err.message
+        payload: err.message,
       });
     });
 };
 
-export const deleteTodo = id => dispatch => {
+export const deleteTodo = id => (dispatch) => {
   axios
     .delete(`${API_URL}/${id}`)
     .then(() => {
       dispatch({
         type: DELETE_TODO,
-        payload: id
+        payload: id,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({
         type: ERROR,
-        payload: err.message
+        payload: err.message,
       });
     });
 };
