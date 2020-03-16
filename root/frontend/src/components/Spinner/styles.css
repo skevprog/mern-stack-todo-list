@@ -1,6 +1,5 @@
 .loader {
-    border: .6rem solid #3498db;
-    border-top: .6rem solid #f3f3f3; 
+    border: .4rem dashed #808080f3;
     border-radius: 50%;
     width: 4rem;
     height: 4rem;
@@ -16,8 +15,7 @@
     .loader {
       width: 6rem;
       height: 6rem;
-      border: .8rem solid #3498db;;
-      border-top: .8rem solid #f3f3f3; 
+      border: .5rem dashed #808080f3;;
     }
   }
   
