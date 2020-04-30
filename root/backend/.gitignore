@@ -13,4 +13,7 @@ node_modules
 # Ignore SASS config files
 .sass-cache
 
+# Ignore DS files
+**/.DS_Store
+
 config.env
